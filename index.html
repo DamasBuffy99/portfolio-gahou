@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Isaac Damas GAHOU — Ingénieur Énergéticien</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/marked/9.1.6/marked.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --teal:#0a9396;--teal-light:#94d2bd;--teal-dark:#005f61;
+  --amber:#e9d8a6;--bg:#001219;--bg2:#012a32;--bg3:#0d3b44;
+  --text:#e0f0f1;--muted:#7aadae;--border:rgba(10,147,150,0.25);
+  --font-mono:'Space Mono',monospace;--font-body:'Inter',sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--font-body);line-height:1.7;overflow-x:hidden}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 5%;height:64px;background:rgba(0,18,25,0.9);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+.nav-logo{font-family:var(--font-mono);font-size:14px;color:var(--teal);letter-spacing:2px;text-decoration:none}
+.nav-logo span{color:var(--amber)}
+.nav-links{display:flex;gap:24px;list-style:none}
+.nav-links a{color:var(--muted);text-decoration:none;font-size:12px;letter-spacing:1px;text-transform:uppercase;font-family:var(--font-mono);transition:color .2s}
+.nav-links a:hover{color:var(--teal-light)}
+.nav-right{display:flex;gap:10px;align-items:center}
+.nav-cta{background:var(--teal);color:#fff;padding:7px 16px;border-radius:3px;font-size:12px;font-family:var(--font-mono);text-decoration:none;letter-spacing:1px;transition:background .2s}
+.nav-cta:hover{background:var(--teal-dark)}
+.nav-admin{border:1px solid var(--border);color:var(--muted);padding:7px 14px;border-radius:3px;font-size:11px;font-family:var(--font-mono);text-decoration:none;letter-spacing:1px;cursor:pointer;background:none;transition:all .2s}
+.nav-admin:hover{border-color:var(--teal);color:var(--teal)}
+
+/* HERO */
+#hero{min-height:100vh;display:flex;align-items:center;padding:80px 5% 60px;position:relative;overflow:hidden}
+.hero-bg-grid{position:absolute;inset:0;background-image:linear-gradient(var(--border) 1px,transparent 1px),linear-gradient(90deg,var(--border) 1px,transparent 1px);background-size:60px 60px;opacity:.4}
+.hero-glow{position:absolute;top:-200px;right:-100px;width:600px;height:600px;background:radial-gradient(circle,rgba(10,147,150,.15) 0%,transparent 70%);pointer-events:none}
+.hero-content{position:relative;max-width:800px}
+.hero-eyebrow{font-family:var(--font-mono);font-size:12px;color:var(--teal);letter-spacing:3px;text-transform:uppercase;margin-bottom:20px;display:flex;align-items:center;gap:10px}
+.hero-eyebrow::before{content:'';display:inline-block;width:30px;height:1px;background:var(--teal)}
+.hero-name{font-family:var(--font-mono);font-size:clamp(36px,6vw,72px);font-weight:700;line-height:1.05;letter-spacing:-1px;margin-bottom:10px}
+.hero-name .last{color:var(--teal)}
+.hero-terminal{margin:28px 0;background:var(--bg2);border:1px solid var(--border);border-radius:6px;overflow:hidden;max-width:560px}
+.terminal-bar{display:flex;align-items:center;gap:6px;padding:10px 14px;background:rgba(255,255,255,.04);border-bottom:1px solid var(--border)}
+.t-dot{width:10px;height:10px;border-radius:50%}
+.t-dot.r{background:#ff5f57}.t-dot.y{background:#febc2e}.t-dot.g{background:#28c840}
+.terminal-body{padding:16px 20px;font-family:var(--font-mono);font-size:13px;line-height:1.8;min-height:80px}
+.t-prompt{color:var(--teal)}.t-cmd{color:var(--amber)}.t-out{color:var(--teal-light)}
+.t-cursor{display:inline-block;width:8px;height:14px;background:var(--teal);animation:blink 1s step-end infinite;vertical-align:middle}
+@keyframes blink{50%{opacity:0}}
+.hero-desc{color:var(--muted);font-size:15px;max-width:520px;margin-bottom:36px;line-height:1.8}
+.hero-ctas{display:flex;gap:14px;flex-wrap:wrap}
+.btn-primary{background:var(--teal);color:#fff;padding:12px 26px;border-radius:3px;text-decoration:none;font-family:var(--font-mono);font-size:13px;letter-spacing:1px;transition:all .2s;border:1px solid var(--teal)}
+.btn-primary:hover{background:transparent;color:var(--teal)}
+.btn-ghost{border:1px solid var(--border);color:var(--teal-light);padding:12px 26px;border-radius:3px;text-decoration:none;font-family:var(--font-mono);font-size:13px;letter-spacing:1px;transition:all .2s}
+.btn-ghost:hover{border-color:var(--teal);color:var(--teal)}
+.hero-stats{display:flex;gap:40px;margin-top:48px;padding-top:32px;border-top:1px solid var(--border);flex-wrap:wrap}
+.stat-num{font-family:var(--font-mono);font-size:28px;font-weight:700;color:var(--teal)}
+.stat-label{font-size:11px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-top:2px}
+
+/* SECTIONS */
+section{padding:90px 5%}
+.section-eyebrow{font-family:var(--font-mono);font-size:11px;color:var(--teal);letter-spacing:3px;text-transform:uppercase;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.section-eyebrow::before{content:'//';color:var(--teal-dark)}
+.section-title{font-family:var(--font-mono);font-size:clamp(22px,4vw,36px);font-weight:700;color:var(--text);margin-bottom:44px;line-height:1.2}
+.section-title span{color:var(--teal)}
+
+/* ABOUT */
+#about{background:var(--bg2)}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start}
+.about-text p{color:var(--muted);font-size:15px;line-height:1.9;margin-bottom:16px}
+.about-text p strong{color:var(--text)}
+.about-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
+.tag{font-family:var(--font-mono);font-size:11px;padding:5px 12px;border:1px solid var(--border);border-radius:2px;color:var(--teal-light);letter-spacing:1px}
+.spec-block{border:1px solid var(--border);border-radius:4px;padding:18px 22px;margin-bottom:14px;background:var(--bg3)}
+.spec-block-title{font-family:var(--font-mono);font-size:10px;color:var(--teal);letter-spacing:2px;text-transform:uppercase;margin-bottom:12px}
+.spec-list{list-style:none}
+.spec-list li{font-size:13px;color:var(--muted);padding:4px 0;border-bottom:1px solid rgba(255,255,255,.05);display:flex;align-items:center;gap:8px}
+.spec-list li::before{content:'▸';color:var(--teal);font-size:10px}
+.spec-list li:last-child{border:none}
+
+/* SKILLS */
+#skills{background:var(--bg)}
+.skills-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px}
+.skill-card{background:var(--bg2);border:1px solid var(--border);border-radius:4px;padding:26px;transition:border-color .2s,transform .2s}
+.skill-card:hover{border-color:var(--teal);transform:translateY(-3px)}
+.skill-card-icon{font-size:22px;margin-bottom:12px}
+.skill-card-title{font-family:var(--font-mono);font-size:12px;color:var(--text);margin-bottom:14px;font-weight:700;letter-spacing:1px}
+.skill-item{margin-bottom:9px}
+.skill-name-row{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-bottom:4px;font-family:var(--font-mono)}
+.skill-bar{height:3px;background:rgba(255,255,255,.08);border-radius:2px}
+.skill-fill{height:3px;background:linear-gradient(90deg,var(--teal-dark),var(--teal));border-radius:2px}
+
+/* EXPERIENCE */
+#experience{background:var(--bg2)}
+.timeline{position:relative;padding-left:28px}
+.timeline::before{content:'';position:absolute;left:0;top:8px;bottom:0;width:1px;background:linear-gradient(to bottom,var(--teal),transparent)}
+.timeline-item{position:relative;margin-bottom:44px}
+.timeline-dot{position:absolute;left:-34px;top:6px;width:12px;height:12px;border-radius:2px;background:var(--teal);transform:rotate(45deg)}
+.timeline-date{font-family:var(--font-mono);font-size:10px;color:var(--teal);letter-spacing:2px;margin-bottom:6px}
+.timeline-role{font-family:var(--font-mono);font-size:16px;font-weight:700;color:var(--text);margin-bottom:4px}
+.timeline-company{font-size:13px;color:var(--amber);margin-bottom:12px}
+.timeline-desc{list-style:none}
+.timeline-desc li{font-size:13px;color:var(--muted);padding:4px 0 4px 14px;position:relative;line-height:1.6}
+.timeline-desc li::before{content:'//';position:absolute;left:0;color:var(--teal-dark);font-family:var(--font-mono);font-size:9px;top:6px}
+.badges{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+.badge{font-family:var(--font-mono);font-size:10px;padding:3px 10px;background:rgba(10,147,150,.1);border:1px solid rgba(10,147,150,.3);border-radius:2px;color:var(--teal-light)}
+
+/* PROJECTS */
+#projects{background:var(--bg)}
+.projects-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px}
+.project-card{background:var(--bg2);border:1px solid var(--border);border-radius:4px;overflow:hidden;transition:border-color .2s,transform .2s;display:flex;flex-direction:column}
+.project-card:hover{border-color:var(--teal);transform:translateY(-4px)}
+.project-header{padding:22px 22px 0;display:flex;justify-content:space-between;align-items:flex-start}
+.project-kwc{font-family:var(--font-mono);font-size:26px;font-weight:700;color:var(--teal);line-height:1}
+.project-type{font-family:var(--font-mono);font-size:10px;color:var(--amber);letter-spacing:1px;border:1px solid rgba(233,216,166,.3);padding:3px 8px;border-radius:2px}
+.project-body{padding:14px 22px 20px;flex:1;display:flex;flex-direction:column}
+.project-title{font-family:var(--font-mono);font-size:13px;font-weight:700;color:var(--text);margin-bottom:8px}
+.project-desc{font-size:13px;color:var(--muted);line-height:1.7;flex:1;margin-bottom:12px}
+.project-meta{font-family:var(--font-mono);font-size:10px;color:var(--teal-dark);letter-spacing:1px}
+.project-footer{padding:10px 22px;border-top:1px solid var(--border);display:flex;flex-wrap:wrap;gap:5px}
+
+/* CERTIFICATIONS */
+#certifications{background:var(--bg2)}
+.certs-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+.cert-card{background:var(--bg3);border:1px solid var(--border);border-radius:4px;padding:18px 22px;display:flex;gap:14px;align-items:flex-start;transition:border-color .2s}
+.cert-card:hover{border-color:var(--teal)}
+.cert-icon{font-size:20px;flex-shrink:0;margin-top:2px}
+.cert-date{font-family:var(--font-mono);font-size:10px;color:var(--teal);letter-spacing:1px;margin-bottom:5px}
+.cert-title{font-size:13px;color:var(--text);font-weight:500;line-height:1.5;margin-bottom:3px}
+.cert-issuer{font-size:12px;color:var(--muted)}
+
+/* CV */
+#cv{background:var(--bg);text-align:center}
+.cv-box{display:inline-block;border:1px solid var(--border);border-radius:6px;padding:44px 56px;background:var(--bg2);max-width:480px}
+.cv-box p{color:var(--muted);font-size:14px;margin-bottom:24px;line-height:1.7}
+.cv-dl{display:inline-flex;align-items:center;gap:10px;background:var(--teal);color:#fff;padding:13px 28px;border-radius:3px;text-decoration:none;font-family:var(--font-mono);font-size:12px;letter-spacing:1px;transition:background .2s}
+.cv-dl:hover{background:var(--teal-dark)}
+
+/* BLOG */
+#blog{background:var(--bg2)}
+.blog-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px}
+.blog-card{background:var(--bg3);border:1px solid var(--border);border-radius:4px;padding:24px;transition:border-color .2s,transform .2s;cursor:pointer}
+.blog-card:hover{border-color:var(--teal);transform:translateY(-3px)}
+.blog-tag{font-family:var(--font-mono);font-size:10px;color:var(--teal);letter-spacing:2px;text-transform:uppercase;margin-bottom:10px}
+.blog-title{font-family:var(--font-mono);font-size:13px;font-weight:700;color:var(--text);line-height:1.4;margin-bottom:8px}
+.blog-excerpt{font-size:13px;color:var(--muted);line-height:1.7;margin-bottom:14px}
+.blog-meta{font-family:var(--font-mono);font-size:10px;color:var(--teal-dark);display:flex;gap:12px}
+.blog-soon{font-family:var(--font-mono);font-size:10px;color:var(--amber);padding:3px 8px;border:1px solid rgba(233,216,166,.3);border-radius:2px;display:inline-block;margin-top:6px}
+.blog-empty{color:var(--muted);font-size:14px;font-family:var(--font-mono);text-align:center;padding:40px;border:1px dashed var(--border);border-radius:4px}
+
+/* CONTACT */
+#contact{background:var(--bg);text-align:center;padding:96px 5%}
+.contact-inner{max-width:540px;margin:0 auto}
+.contact-inner p{color:var(--muted);font-size:15px;margin-bottom:36px;line-height:1.8}
+.contact-links{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-bottom:32px}
+.contact-link{display:flex;align-items:center;gap:8px;padding:11px 18px;border:1px solid var(--border);border-radius:3px;color:var(--teal-light);text-decoration:none;font-family:var(--font-mono);font-size:11px;letter-spacing:1px;transition:all .2s}
+.contact-link:hover{border-color:var(--teal);background:rgba(10,147,150,.08)}
+.contact-email{font-family:var(--font-mono);font-size:15px;color:var(--teal);margin-bottom:8px}
+.contact-email a{color:inherit;text-decoration:none;border-bottom:1px solid var(--teal-dark)}
+
+/* FOOTER */
+footer{background:var(--bg2);border-top:1px solid var(--border);padding:24px 5%;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
+.footer-copy{font-family:var(--font-mono);font-size:11px;color:var(--muted)}
+.footer-made{font-family:var(--font-mono);font-size:11px;color:var(--teal-dark)}
+
+/* BLOG POST MODAL */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:200;overflow-y:auto;padding:40px 20px}
+.modal-overlay.open{display:flex;justify-content:center;align-items:flex-start}
+.modal-box{background:var(--bg2);border:1px solid var(--border);border-radius:8px;max-width:700px;width:100%;padding:44px 48px;position:relative;margin:auto}
+.modal-close{position:absolute;top:20px;right:24px;background:none;border:none;color:var(--muted);font-size:20px;cursor:pointer;font-family:var(--font-mono)}
+.modal-close:hover{color:var(--teal)}
+.modal-tag{font-family:var(--font-mono);font-size:10px;color:var(--teal);letter-spacing:2px;margin-bottom:12px}
+.modal-title{font-family:var(--font-mono);font-size:22px;font-weight:700;color:var(--text);margin-bottom:8px;line-height:1.3}
+.modal-meta{font-family:var(--font-mono);font-size:11px;color:var(--muted);margin-bottom:28px;display:flex;gap:16px}
+.modal-content{color:var(--muted);font-size:14px;line-height:1.9}
+.modal-content h2,.modal-content h3{color:var(--text);font-family:var(--font-mono);margin:24px 0 12px}
+.modal-content p{margin-bottom:14px}
+.modal-content code{background:var(--bg3);color:var(--teal-light);padding:2px 6px;border-radius:3px;font-size:12px}
+
+/* ADMIN PANEL */
+.admin-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.9);z-index:300;overflow-y:auto}
+.admin-overlay.open{display:block}
+.admin-wrap{max-width:1000px;margin:0 auto;padding:40px 24px}
+.admin-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:32px;padding-bottom:16px;border-bottom:1px solid var(--border)}
+.admin-title{font-family:var(--font-mono);font-size:18px;color:var(--teal);font-weight:700}
+.admin-close-btn{background:none;border:1px solid var(--border);color:var(--muted);padding:7px 16px;border-radius:3px;font-family:var(--font-mono);font-size:12px;cursor:pointer;transition:all .2s}
+.admin-close-btn:hover{border-color:var(--teal);color:var(--teal)}
+.admin-tabs{display:flex;gap:8px;margin-bottom:28px;flex-wrap:wrap}
+.admin-tab{padding:8px 18px;border-radius:20px;border:1px solid var(--border);background:var(--bg2);color:var(--muted);cursor:pointer;font-size:12px;font-family:var(--font-mono);transition:all .2s;letter-spacing:1px}
+.admin-tab.active{background:var(--teal);color:#fff;border-color:var(--teal)}
+.admin-section{display:none}
+.admin-section.active{display:block}
+.form-group{margin-bottom:18px}
+.form-label{font-family:var(--font-mono);font-size:11px;color:var(--teal);letter-spacing:1px;text-transform:uppercase;display:block;margin-bottom:7px}
+.form-input,.form-textarea,.form-select{width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:3px;color:var(--text);padding:10px 14px;font-family:var(--font-body);font-size:13px;transition:border-color .2s;outline:none}
+.form-input:focus,.form-textarea:focus,.form-select:focus{border-color:var(--teal)}
+.form-textarea{resize:vertical;min-height:120px;line-height:1.6}
+.form-select option{background:var(--bg3)}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.btn-save{background:var(--teal);color:#fff;padding:10px 24px;border:none;border-radius:3px;font-family:var(--font-mono);font-size:12px;letter-spacing:1px;cursor:pointer;transition:background .2s}
+.btn-save:hover{background:var(--teal-dark)}
+.btn-danger{background:rgba(255,80,80,.15);color:#ff6b6b;padding:7px 16px;border:1px solid rgba(255,80,80,.3);border-radius:3px;font-family:var(--font-mono);font-size:11px;cursor:pointer;transition:all .2s}
+.btn-danger:hover{background:rgba(255,80,80,.25)}
+.admin-list-item{background:var(--bg3);border:1px solid var(--border);border-radius:4px;padding:16px 20px;margin-bottom:10px;display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.admin-list-item-info{}
+.admin-list-item-title{font-family:var(--font-mono);font-size:13px;color:var(--text);margin-bottom:4px}
+.admin-list-item-meta{font-size:12px;color:var(--muted)}
+.admin-list-item-actions{display:flex;gap:8px;flex-shrink:0}
+.btn-edit{background:none;border:1px solid var(--border);color:var(--teal);padding:5px 12px;border-radius:3px;font-family:var(--font-mono);font-size:11px;cursor:pointer;transition:all .2s}
+.btn-edit:hover{border-color:var(--teal);background:rgba(10,147,150,.1)}
+.admin-form-card{background:var(--bg3);border:1px solid var(--border);border-radius:4px;padding:24px;margin-bottom:20px}
+.admin-form-card-title{font-family:var(--font-mono);font-size:12px;color:var(--teal);margin-bottom:20px;letter-spacing:1px}
+.toast{position:fixed;bottom:24px;right:24px;background:var(--teal);color:#fff;padding:12px 20px;border-radius:4px;font-family:var(--font-mono);font-size:12px;z-index:999;opacity:0;transition:opacity .3s;pointer-events:none}
+.toast.show{opacity:1}
+.status-badge{display:inline-block;font-family:var(--font-mono);font-size:10px;padding:2px 8px;border-radius:2px;margin-left:8px}
+.status-published{background:rgba(10,147,150,.2);color:var(--teal);border:1px solid rgba(10,147,150,.3)}
+.status-draft{background:rgba(233,216,166,.1);color:var(--amber);border:1px solid rgba(233,216,166,.2)}
+
+/* LOGIN */
+.login-box{background:var(--bg2);border:1px solid var(--border);border-radius:8px;max-width:360px;margin:80px auto;padding:40px 36px}
+.login-title{font-family:var(--font-mono);font-size:16px;color:var(--teal);margin-bottom:8px;font-weight:700}
+.login-sub{font-size:13px;color:var(--muted);margin-bottom:24px}
+.login-error{color:#ff6b6b;font-size:12px;margin-top:8px;font-family:var(--font-mono);display:none}
+
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .5s ease,transform .5s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+/* LOADING */
+.loading{text-align:center;padding:40px;font-family:var(--font-mono);font-size:12px;color:var(--muted)}
+.loading::after{content:'';display:inline-block;width:16px;height:16px;border:2px solid var(--border);border-top-color:var(--teal);border-radius:50%;animation:spin .8s linear infinite;margin-left:10px;vertical-align:middle}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+@media(max-width:768px){
+  .nav-links,.nav-right{display:none}
+  .about-grid,.form-row{grid-template-columns:1fr}
+  .modal-box{padding:28px 20px}
+  .admin-wrap{padding:20px 16px}
+}
+</style>
+</head>
+<body>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#hero">IDG<span>.</span>dev</a>
+  <ul class="nav-links">
+    <li><a href="#about">À propos</a></li>
+    <li><a href="#skills">Compétences</a></li>
+    <li><a href="#experience">Expérience</a></li>
+    <li><a href="#projects">Projets</a></li>
+    <li><a href="#blog">Blog</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div class="nav-right">
+    <a class="nav-cta" href="#contact">Contact</a>
+    <button class="nav-admin" onclick="openAdmin()">⚙ Admin</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg-grid"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow" id="hero-title">Ingénieur Énergéticien & Procédés</div>
+    <div class="hero-name">
+      <div id="hero-firstname">Isaac Damas</div>
+      <div class="last" id="hero-lastname">GAHOU</div>
+    </div>
+    <div class="hero-terminal">
+      <div class="terminal-bar">
+        <div class="t-dot r"></div><div class="t-dot y"></div><div class="t-dot g"></div>
+        <span style="font-family:var(--font-mono);font-size:11px;color:var(--muted);margin-left:8px">terminal — bash</span>
+      </div>
+      <div class="terminal-body">
+        <div><span class="t-prompt">isaac@admec:~$ </span><span class="t-cmd">whoami</span></div>
+        <div id="t-output" class="t-out"></div>
+        <div><span class="t-cursor"></span></div>
+      </div>
+    </div>
+    <p class="hero-desc" id="hero-bio">Spécialisé dans la conception et la réalisation de <strong style="color:var(--text)">systèmes solaires PV hors réseau</strong>. Je conçois, installe et monitore des minicentrales solaires pour des sites isolés, institutionnels et télécom à travers le Bénin.</p>
+    <div class="hero-ctas">
+      <a class="btn-primary" href="#projects">Voir mes projets</a>
+      <a class="btn-ghost" href="#contact">Collaborer</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-item"><div class="stat-num" id="stat-years">2+</div><div class="stat-label">Ans d'expérience</div></div>
+      <div class="stat-item"><div class="stat-num" id="stat-kwc">100+</div><div class="stat-label">kWc installés</div></div>
+      <div class="stat-item"><div class="stat-num" id="stat-sites">8+</div><div class="stat-label">Sites réalisés</div></div>
+      <div class="stat-item"><div class="stat-num">100%</div><div class="stat-label">Off-grid</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- À PROPOS -->
+<section id="about">
+  <div class="section-eyebrow">À propos</div>
+  <div class="section-title">Ingénieur du <span>solaire</span>,<br>penseur des systèmes.</div>
+  <div class="about-grid reveal">
+    <div class="about-text">
+      <p>Diplômé de l'<strong>ENSGEP</strong> d'Abomey en décembre 2022, je suis ingénieur en systèmes d'énergie chez <strong>AdMec CTIB</strong> à Cotonou depuis juillet 2023.</p>
+      <p>Mon domaine de prédilection : les <strong>systèmes photovoltaïques hors réseau</strong> — du dimensionnement sur PVsyst jusqu'à la mise en service sur le terrain.</p>
+      <p>Je travaille sur des projets d'électrification de sites télécoms (antennes MTN), de commissariats et de postes de contrôle à travers le Bénin.</p>
+      <div class="about-tags">
+        <span class="tag">PV hors réseau</span><span class="tag">Mini-grids</span>
+        <span class="tag">Onduleurs Deye/SMA</span><span class="tag">ISO 50001</span>
+        <span class="tag">Audit énergétique</span><span class="tag">Permis B</span>
+      </div>
+    </div>
+    <div>
+      <div class="spec-block"><div class="spec-block-title">// Conception & Simulation</div><ul class="spec-list"><li>PVsyst — centrales hors réseau</li><li>Dialux Evo — éclairage</li><li>AutoCAD — plans électriques</li><li>XLPro Calcul & Tableau</li><li>SOLIDWORKS — conception 3D</li></ul></div>
+      <div class="spec-block"><div class="spec-block-title">// Systèmes & Normes</div><ul class="spec-list"><li>NTE C 15-712 (installations PV)</li><li>ISO 50001 (management énergie)</li><li>Onduleurs : Deye, SMA, Victron</li><li>BMS batterie & régulateurs MPPT</li></ul></div>
+      <div class="spec-block"><div class="spec-block-title">// Données & Monitoring</div><ul class="spec-list"><li>Python — analyse de données</li><li>Monitoring Deye Master/Slave</li><li>Tableaux de bord PV (HTML/JS)</li></ul></div>
+    </div>
+  </div>
+</section>
+
+<!-- COMPÉTENCES -->
+<section id="skills">
+  <div class="section-eyebrow">Compétences</div>
+  <div class="section-title">Ce que je <span>maîtrise</span>.</div>
+  <div class="skills-grid">
+    <div class="skill-card reveal"><div class="skill-card-icon">☀️</div><div class="skill-card-title">SYSTÈMES PV</div><div class="skill-item"><div class="skill-name-row"><span>Dimensionnement PVsyst</span><span>90%</span></div><div class="skill-bar"><div class="skill-fill" style="width:90%"></div></div></div><div class="skill-item"><div class="skill-name-row"><span>Installation terrain</span><span>95%</span></div><div class="skill-bar"><div class="skill-fill" style="width:95%"></div></div></div><div class="skill-item"><div class="skill-name-row"><span>Paramétrage onduleurs</span><span>88%</span></div><div class="skill-bar"><div class="skill-fill" style="width:88%"></div></div></div><div class="skill-item"><div class="skill-name-row"><span>Monitoring actif</span><span>85%</span></div><div class="skill-bar"><div class="skill-fill" style="width:85%"></div></div></div></div>
+    <div class="skill-card reveal"><div class="skill-card-icon">⚡</div><div class="skill-card-title">ÉLECTRICITÉ BT</div><div class="skill-item"><div class="skill-name-row"><span>AutoCAD électrique</span><span>80%</span></div><div class="skill-bar"><div class="skill-fill" style="width:80%"></div></div></div><div class="skill-item"><div class="skill-name-row"><span>XLPro Calcul</span><span>75%</span></div><div class="skill-bar"><div class="skill-fill" style="width:75%"></div></div></div><div class="skill-item"><div class="skill-name-row"><span>Câblage coffrets</span><span>90%</span></div><div class="skill-bar"><div class="skill-fill" style="width:90%"></div></div></div><div class="skill-item"><div class="skill-name-row"><span>NTE C 15-712</span><span>78%</span></div><div class="skill-bar"><div class="skill-fill" style="width:78%"></div></div></div></div>
+    <div class="skill-card reveal"><div class="skill-card-icon">💡</div><div class="skill-card-title">ÉCLAIRAGE & AUDIT</div><div class="skill-item"><div class="skill-name-row"><span>Dialux Evo</span><span>75%</span></div><div class="skill-bar"><div class="skill-fill" style="width:75%"></div></div></div><div class="skill-item"><div class="skill-name-row"><span>Audit énergétique</span><span>80%</span></div><div class="skill-bar"><div class="skill-fill" style="width:80%"></div></div></div><div class="skill-item"><div class="skill-name-row"><span>ISO 50001</span><span>72%</span></div><div class="skill-bar"><div class="skill-fill" style="width:72%"></div></div></div></div>
+    <div class="skill-card reveal"><div class="skill-card-icon">🖥️</div><div class="skill-card-title">DONNÉES & CODE</div><div class="skill-item"><div class="skill-name-row"><span>Python</span><span>65%</span></div><div class="skill-bar"><div class="skill-fill" style="width:65%"></div></div></div><div class="skill-item"><div class="skill-name-row"><span>HTML/JS</span><span>70%</span></div><div class="skill-bar"><div class="skill-fill" style="width:70%"></div></div></div><div class="skill-item"><div class="skill-name-row"><span>Arduino</span><span>55%</span></div><div class="skill-bar"><div class="skill-fill" style="width:55%"></div></div></div></div>
+  </div>
+</section>
+
+<!-- EXPÉRIENCE -->
+<section id="experience">
+  <div class="section-eyebrow">Expérience</div>
+  <div class="section-title">Parcours <span>professionnel</span>.</div>
+  <div class="timeline">
+    <div class="timeline-item reveal">
+      <div class="timeline-dot"></div>
+      <div class="timeline-date">JUILLET 2023 — PRÉSENT</div>
+      <div class="timeline-role">Ingénieur Systèmes d'Énergie</div>
+      <div class="timeline-company">⚡ AdMec CTIB · Cotonou, Bénin</div>
+      <ul class="timeline-desc">
+        <li>Chef d'équipe — Minicentrales solaires off-grid pour antennes MTN : 2×30 kWc (Couffo) + 2×14 kWc (Bassila)</li>
+        <li>Dimensionnement, câblage, paramétrage onduleurs, mise à la terre & monitoring actif</li>
+        <li>18 kWc DC — commissariat de Kabo + poste de contrôle de Hillacondji</li>
+        <li>Mission de réparation d'urgence — site AV04 (incendie, mai 2026)</li>
+      </ul>
+      <div class="badges"><span class="badge">PVsyst</span><span class="badge">Deye</span><span class="badge">SMA</span><span class="badge">Victron</span><span class="badge">Off-grid</span><span class="badge">MTN</span></div>
+    </div>
+    <div class="timeline-item reveal">
+      <div class="timeline-dot"></div>
+      <div class="timeline-date">JUILLET — SEPTEMBRE 2021</div>
+      <div class="timeline-role">Stagiaire Électricien Bâtiment</div>
+      <div class="timeline-company">🔌 LGI · Cotonou, Bénin</div>
+      <ul class="timeline-desc">
+        <li>Technicien sur 3 chantiers domestiques et administratifs</li>
+        <li>Pose de câbles courant fort et courant faible, câblage des coffrets</li>
+      </ul>
+      <div class="badges"><span class="badge">Électricité BT</span><span class="badge">Courant fort</span><span class="badge">Coffrets</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJETS -->
+<section id="projects">
+  <div class="section-eyebrow">Projets</div>
+  <div class="section-title">Réalisations <span>terrain</span>.</div>
+  <div class="projects-grid" id="projects-grid"><div class="loading">Chargement des projets</div></div>
+</section>
+
+<!-- CERTIFICATIONS -->
+<section id="certifications">
+  <div class="section-eyebrow">Certifications & Formation</div>
+  <div class="section-title">Apprentissage <span>continu</span>.</div>
+  <div class="certs-grid" id="certs-grid"><div class="loading">Chargement</div></div>
+</section>
+
+<!-- CV -->
+<section id="cv">
+  <div class="section-eyebrow">Curriculum Vitae</div>
+  <div class="section-title">Mon <span>CV</span> complet.</div>
+  <div class="cv-box reveal">
+    <p>Retrouvez l'ensemble de mon parcours, mes compétences et mes certifications dans mon CV détaillé.</p>
+    <a class="cv-dl" href="CV_Isaac_Damas_GAHOU.pdf" download>↓ &nbsp;Télécharger mon CV (PDF)</a>
+  </div>
+</section>
+
+<!-- BLOG -->
+<section id="blog">
+  <div class="section-eyebrow">Blog & Articles</div>
+  <div class="section-title">Partage de <span>connaissances</span>.</div>
+  <div class="blog-grid" id="blog-grid"><div class="loading">Chargement des articles</div></div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-eyebrow" style="justify-content:center">Contact</div>
+  <div class="section-title" style="margin-bottom:16px;text-align:center">Travaillons <span>ensemble</span>.</div>
+  <div class="contact-inner">
+    <p>Disponible pour des missions de <strong style="color:var(--text)">conception PV</strong>, des <strong style="color:var(--text)">rapports PVsyst</strong>, des <strong style="color:var(--text)">plans AutoCAD</strong> et des collaborations freelance.</p>
+    <div class="contact-email"><a id="contact-email-link" href="mailto:igahou22@gmail.com">igahou22@gmail.com</a></div>
+    <div style="font-family:var(--font-mono);font-size:12px;color:var(--muted);margin-bottom:28px" id="contact-phone">(+229) 01 67 84 47 97 · Cotonou / Abomey-Calavi</div>
+    <div class="contact-links">
+      <a class="contact-link" id="contact-email-btn" href="mailto:igahou22@gmail.com">✉ Email</a>
+      <a class="contact-link" id="contact-linkedin" href="https://www.linkedin.com/in/isaac-gahou" target="_blank">in LinkedIn</a>
+      <a class="contact-link" href="CV_Isaac_Damas_GAHOU.pdf" download>↓ CV PDF</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-copy">© 2026 Isaac Damas GAHOU — Ingénieur Énergéticien</div>
+  <div class="footer-made">Cotonou, Bénin 🇧🇯</div>
+</footer>
+
+<!-- BLOG POST MODAL -->
+<div class="modal-overlay" id="blog-modal">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeBlogModal()">✕</button>
+    <div class="modal-tag" id="modal-tag"></div>
+    <div class="modal-title" id="modal-title"></div>
+    <div class="modal-meta" id="modal-meta"></div>
+    <div class="modal-content" id="modal-content"></div>
+  </div>
+</div>
+
+<!-- ADMIN PANEL -->
+<div class="admin-overlay" id="admin-panel">
+  <div class="admin-wrap">
+    <!-- LOGIN -->
+    <div id="admin-login">
+      <div class="login-box">
+        <div class="login-title">⚙ Espace Admin</div>
+        <div class="login-sub">Accès réservé — entrez votre mot de passe</div>
+        <div class="form-group">
+          <label class="form-label">Mot de passe</label>
+          <input class="form-input" type="password" id="admin-pwd" placeholder="••••••••" onkeydown="if(event.key==='Enter')checkLogin()"/>
+          <div class="login-error" id="login-error">Mot de passe incorrect.</div>
+        </div>
+        <div style="display:flex;gap:10px">
+          <button class="btn-save" onclick="checkLogin()">Connexion</button>
+          <button class="admin-close-btn" onclick="closeAdmin()">Annuler</button>
+        </div>
+      </div>
+    </div>
+    <!-- DASHBOARD -->
+    <div id="admin-dashboard" style="display:none">
+      <div class="admin-header">
+        <div class="admin-title">⚙ Panneau d'administration</div>
+        <button class="admin-close-btn" onclick="closeAdmin()">✕ Fermer</button>
+      </div>
+      <div class="admin-tabs">
+        <button class="admin-tab active" onclick="adminTab('profile')">👤 Profil</button>
+        <button class="admin-tab" onclick="adminTab('blog')">✍ Blog</button>
+        <button class="admin-tab" onclick="adminTab('projects')">🔧 Projets</button>
+        <button class="admin-tab" onclick="adminTab('certifications')">🎓 Certifications</button>
+      </div>
+
+      <!-- PROFIL -->
+      <div class="admin-section active" id="tab-profile">
+        <div class="admin-form-card">
+          <div class="admin-form-card-title">// Informations personnelles</div>
+          <div class="form-row">
+            <div class="form-group"><label class="form-label">Nom complet</label><input class="form-input" id="p-name" placeholder="Isaac Damas GAHOU"/></div>
+            <div class="form-group"><label class="form-label">Titre</label><input class="form-input" id="p-title" placeholder="Ingénieur Énergéticien..."/></div>
+          </div>
+          <div class="form-group"><label class="form-label">Bio</label><textarea class="form-textarea" id="p-bio" placeholder="Votre présentation..."></textarea></div>
+          <div class="form-row">
+            <div class="form-group"><label class="form-label">Email</label><input class="form-input" id="p-email" placeholder="email@gmail.com"/></div>
+            <div class="form-group"><label class="form-label">Téléphone</label><input class="form-input" id="p-phone" placeholder="(+229)..."/></div>
+          </div>
+          <div class="form-row">
+            <div class="form-group"><label class="form-label">Localisation</label><input class="form-input" id="p-location" placeholder="Cotonou, Bénin"/></div>
+            <div class="form-group"><label class="form-label">LinkedIn URL</label><input class="form-input" id="p-linkedin" placeholder="https://linkedin.com/in/..."/></div>
+          </div>
+          <div class="form-row">
+            <div class="form-group"><label class="form-label">Stat — Années d'exp.</label><input class="form-input" id="p-years" placeholder="2+"/></div>
+            <div class="form-group"><label class="form-label">Stat — kWc installés</label><input class="form-input" id="p-kwc" placeholder="100+"/></div>
+            <div class="form-group"><label class="form-label">Stat — Sites réalisés</label><input class="form-input" id="p-sites" placeholder="8+"/></div>
+          </div>
+          <button class="btn-save" onclick="saveProfile()">💾 Enregistrer le profil</button>
+        </div>
+      </div>
+
+      <!-- BLOG -->
+      <div class="admin-section" id="tab-blog">
+        <div class="admin-form-card">
+          <div class="admin-form-card-title" id="blog-form-title">// Nouvel article</div>
+          <input type="hidden" id="b-id"/>
+          <div class="form-row">
+            <div class="form-group"><label class="form-label">Titre</label><input class="form-input" id="b-title" placeholder="Titre de l'article"/></div>
+            <div class="form-group"><label class="form-label">Tag</label><input class="form-input" id="b-tag" placeholder="SYSTÈMES PV"/></div>
+          </div>
+          <div class="form-row">
+            <div class="form-group"><label class="form-label">Slug (URL)</label><input class="form-input" id="b-slug" placeholder="mon-article"/></div>
+            <div class="form-group"><label class="form-label">Temps de lecture</label><input class="form-input" id="b-time" placeholder="5 min"/></div>
+          </div>
+          <div class="form-group"><label class="form-label">Résumé</label><textarea class="form-textarea" id="b-excerpt" placeholder="Résumé court..." style="min-height:70px"></textarea></div>
+          <div class="form-group"><label class="form-label">Contenu (Markdown)</label><textarea class="form-textarea" id="b-content" placeholder="## Introduction&#10;&#10;Votre contenu en Markdown..." style="min-height:200px"></textarea></div>
+          <div class="form-group">
+            <label class="form-label">Statut</label>
+            <select class="form-select" id="b-published">
+              <option value="false">Brouillon</option>
+              <option value="true">Publié</option>
+            </select>
+          </div>
+          <div style="display:flex;gap:10px">
+            <button class="btn-save" onclick="saveBlogPost()">💾 Enregistrer l'article</button>
+            <button class="btn-edit" onclick="resetBlogForm()">+ Nouvel article</button>
+          </div>
+        </div>
+        <div id="blog-admin-list"></div>
+      </div>
+
+      <!-- PROJETS -->
+      <div class="admin-section" id="tab-projects">
+        <div class="admin-form-card">
+          <div class="admin-form-card-title" id="proj-form-title">// Nouveau projet</div>
+          <input type="hidden" id="proj-id"/>
+          <div class="form-row">
+            <div class="form-group"><label class="form-label">Titre</label><input class="form-input" id="proj-title" placeholder="Titre du projet"/></div>
+            <div class="form-group"><label class="form-label">kWc / Référence</label><input class="form-input" id="proj-kwc" placeholder="30 kWc ×2"/></div>
+          </div>
+          <div class="form-row">
+            <div class="form-group"><label class="form-label">Type</label><input class="form-input" id="proj-type" placeholder="OFF-GRID"/></div>
+            <div class="form-group"><label class="form-label">Méta (lieu · date)</label><input class="form-input" id="proj-meta" placeholder="AdMec CTIB · 2024"/></div>
+          </div>
+          <div class="form-group"><label class="form-label">Description</label><textarea class="form-textarea" id="proj-desc" style="min-height:80px"></textarea></div>
+          <div class="form-group"><label class="form-label">Badges (séparés par des virgules)</label><input class="form-input" id="proj-badges" placeholder="Off-grid, Deye, MTN"/></div>
+          <div style="display:flex;gap:10px">
+            <button class="btn-save" onclick="saveProject()">💾 Enregistrer le projet</button>
+            <button class="btn-edit" onclick="resetProjectForm()">+ Nouveau projet</button>
+          </div>
+        </div>
+        <div id="projects-admin-list"></div>
+      </div>
+
+      <!-- CERTIFICATIONS -->
+      <div class="admin-section" id="tab-certifications">
+        <div class="admin-form-card">
+          <div class="admin-form-card-title" id="cert-form-title">// Nouvelle certification</div>
+          <input type="hidden" id="cert-id"/>
+          <div class="form-row">
+            <div class="form-group"><label class="form-label">Titre</label><input class="form-input" id="cert-title" placeholder="Nom de la certification"/></div>
+            <div class="form-group"><label class="form-label">Date</label><input class="form-input" id="cert-date" placeholder="MARS 2026"/></div>
+          </div>
+          <div class="form-row">
+            <div class="form-group"><label class="form-label">Organisme</label><input class="form-input" id="cert-issuer" placeholder="Udemy · Formateur"/></div>
+            <div class="form-group"><label class="form-label">Icône (emoji)</label><input class="form-input" id="cert-icon" placeholder="🎓"/></div>
+          </div>
+          <div style="display:flex;gap:10px">
+            <button class="btn-save" onclick="saveCert()">💾 Enregistrer</button>
+            <button class="btn-edit" onclick="resetCertForm()">+ Nouvelle certif.</button>
+          </div>
+        </div>
+        <div id="certs-admin-list"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── CONFIG SUPABASE ──
+const SB_URL = 'https://yqvwmiidmxjiupigaujy.supabase.co';
+const SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlxdndtaWlkbXhqaXVwaWdhdWp5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA5OTQxMDcsImV4cCI6MjA5NjU3MDEwN30.iqZSHclLmX2tIHzImO2s6UQBDP8RUAHnfBOoJS0-gbY';
+const ADMIN_PASSWORD = 'gahou2026!';
+
+async function sb(table, opts = {}) {
+  let url = `${SB_URL}/rest/v1/${table}`;
+  const params = [];
+  if (opts.select) params.push(`select=${opts.select}`);
+  if (opts.order) params.push(`order=${opts.order}`);
+  if (opts.filter) params.push(opts.filter);
+  if (params.length) url += '?' + params.join('&');
+  const res = await fetch(url, {
+    method: opts.method || 'GET',
+    headers: {
+      'apikey': SB_KEY, 'Authorization': `Bearer ${SB_KEY}`,
+      'Content-Type': 'application/json',
+      'Prefer': opts.method === 'POST' ? 'return=representation' : (opts.prefer || '')
+    },
+    body: opts.body ? JSON.stringify(opts.body) : undefined
+  });
+  if (!res.ok) throw new Error(await res.text());
+  const txt = await res.text();
+  return txt ? JSON.parse(txt) : [];
+}
+
+// ── TOAST ──
+function toast(msg, err = false) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.style.background = err ? '#c0392b' : 'var(--teal)';
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+// ── TERMINAL ──
+const lines = ['Ingénieur Énergéticien & Procédés','Spécialiste Systèmes PV Hors Réseau','Concepteur · Installateur · Moniteur'];
+let li = 0, ci = 0;
+const tOut = document.getElementById('t-output');
+function typeNext() {
+  if (ci === 0) tOut.textContent = '';
+  if (ci < lines[li].length) { tOut.textContent += lines[li][ci++]; setTimeout(typeNext, 42); }
+  else { li = (li + 1) % lines.length; ci = 0; setTimeout(typeNext, 1800); }
+}
+setTimeout(typeNext, 800);
+
+// ── SCROLL REVEAL ──
+const obs = new IntersectionObserver(entries => entries.forEach(e => e.isIntersecting && e.target.classList.add('visible')), { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+// ── LOAD PROFILE ──
+async function loadProfile() {
+  try {
+    const data = await sb('profile', { select: '*' });
+    if (!data.length) return;
+    const p = data[0];
+    document.getElementById('hero-title').textContent = p.title || '';
+    const nameParts = (p.name || '').split(' ');
+    document.getElementById('hero-lastname').textContent = nameParts.pop() || '';
+    document.getElementById('hero-firstname').textContent = nameParts.join(' ');
+    document.getElementById('hero-bio').innerHTML = (p.bio || '').replace(/\*\*(.*?)\*\*/g, '<strong style="color:var(--text)">$1</strong>');
+    document.getElementById('stat-years').textContent = p.stat_years || '2+';
+    document.getElementById('stat-kwc').textContent = p.stat_kwc || '100+';
+    document.getElementById('stat-sites').textContent = p.stat_sites || '8+';
+    document.getElementById('contact-email-link').href = `mailto:${p.email}`;
+    document.getElementById('contact-email-link').textContent = p.email;
+    document.getElementById('contact-email-btn').href = `mailto:${p.email}`;
+    document.getElementById('contact-phone').textContent = `${p.phone} · ${p.location}`;
+    if (p.linkedin_url) document.getElementById('contact-linkedin').href = p.linkedin_url;
+    // Admin form fill
+    document.getElementById('p-name').value = p.name || '';
+    document.getElementById('p-title').value = p.title || '';
+    document.getElementById('p-bio').value = p.bio || '';
+    document.getElementById('p-email').value = p.email || '';
+    document.getElementById('p-phone').value = p.phone || '';
+    document.getElementById('p-location').value = p.location || '';
+    document.getElementById('p-linkedin').value = p.linkedin_url || '';
+    document.getElementById('p-years').value = p.stat_years || '';
+    document.getElementById('p-kwc').value = p.stat_kwc || '';
+    document.getElementById('p-sites').value = p.stat_sites || '';
+    window._profileId = p.id;
+  } catch (e) { console.error(e); }
+}
+
+// ── LOAD PROJECTS ──
+async function loadProjects() {
+  try {
+    const data = await sb('projects', { select: '*', order: 'display_order.asc' });
+    const grid = document.getElementById('projects-grid');
+    grid.innerHTML = data.map(p => `
+      <div class="project-card reveal">
+        <div class="project-header">
+          <div class="project-kwc">${p.kwc || ''}</div>
+          <div class="project-type">${p.type_label || ''}</div>
+        </div>
+        <div class="project-body">
+          <div class="project-title">${p.title}</div>
+          <div class="project-desc">${p.description || ''}</div>
+          <div class="project-meta">${p.meta || ''}</div>
+        </div>
+        <div class="project-footer">${(p.badges || []).map(b => `<span class="badge">${b}</span>`).join('')}</div>
+      </div>`).join('');
+    document.querySelectorAll('#projects-grid .reveal').forEach(el => obs.observe(el));
+    // Admin list
+    document.getElementById('projects-admin-list').innerHTML = data.map(p => `
+      <div class="admin-list-item">
+        <div class="admin-list-item-info">
+          <div class="admin-list-item-title">${p.title}</div>
+          <div class="admin-list-item-meta">${p.kwc || ''} · ${p.type_label || ''}</div>
+        </div>
+        <div class="admin-list-item-actions">
+          <button class="btn-edit" onclick="editProject('${p.id}')">Modifier</button>
+          <button class="btn-danger" onclick="deleteProject('${p.id}')">Supprimer</button>
+        </div>
+      </div>`).join('');
+    window._projects = data;
+  } catch (e) { console.error(e); }
+}
+
+// ── LOAD CERTS ──
+async function loadCerts() {
+  try {
+    const data = await sb('certifications', { select: '*', order: 'display_order.asc' });
+    document.getElementById('certs-grid').innerHTML = data.map(c => `
+      <div class="cert-card reveal">
+        <div class="cert-icon">${c.icon || '🎓'}</div>
+        <div><div class="cert-date">${c.date_label || ''}</div><div class="cert-title">${c.title}</div><div class="cert-issuer">${c.issuer || ''}</div></div>
+      </div>`).join('');
+    document.querySelectorAll('#certs-grid .reveal').forEach(el => obs.observe(el));
+    document.getElementById('certs-admin-list').innerHTML = data.map(c => `
+      <div class="admin-list-item">
+        <div class="admin-list-item-info">
+          <div class="admin-list-item-title">${c.icon || ''} ${c.title}</div>
+          <div class="admin-list-item-meta">${c.issuer || ''} · ${c.date_label || ''}</div>
+        </div>
+        <div class="admin-list-item-actions">
+          <button class="btn-edit" onclick="editCert('${c.id}')">Modifier</button>
+          <button class="btn-danger" onclick="deleteCert('${c.id}')">Supprimer</button>
+        </div>
+      </div>`).join('');
+    window._certs = data;
+  } catch (e) { console.error(e); }
+}
+
+// ── LOAD BLOG ──
+async function loadBlog(isAdmin = false) {
+  try {
+    const data = isAdmin
+      ? await sb('blog_posts', { select: '*', order: 'created_at.desc' })
+      : await sb('blog_posts', { select: '*', filter: 'published=eq.true', order: 'created_at.desc' });
+    const grid = document.getElementById('blog-grid');
+    if (!data.length) {
+      grid.innerHTML = '<div class="blog-empty">// Articles bientôt disponibles</div>';
+    } else {
+      grid.innerHTML = data.map(p => `
+        <div class="blog-card" onclick="openBlog('${p.id}')">
+          <div class="blog-tag">${p.tag || ''}</div>
+          <div class="blog-title">${p.title}</div>
+          <div class="blog-excerpt">${p.excerpt || ''}</div>
+          <div class="blog-meta"><span>🕐 ${p.read_time || '5 min'}</span></div>
+          ${!p.published ? '<div class="blog-soon">Bientôt disponible</div>' : ''}
+        </div>`).join('');
+    }
+    window._blogPosts = data;
+    if (isAdmin) {
+      document.getElementById('blog-admin-list').innerHTML = data.map(p => `
+        <div class="admin-list-item">
+          <div class="admin-list-item-info">
+            <div class="admin-list-item-title">${p.title}<span class="status-badge ${p.published ? 'status-published' : 'status-draft'}">${p.published ? 'Publié' : 'Brouillon'}</span></div>
+            <div class="admin-list-item-meta">${p.tag || ''} · ${p.read_time || ''}</div>
+          </div>
+          <div class="admin-list-item-actions">
+            <button class="btn-edit" onclick="editBlog('${p.id}')">Modifier</button>
+            <button class="btn-danger" onclick="deleteBlog('${p.id}')">Supprimer</button>
+          </div>
+        </div>`).join('');
+    }
+  } catch (e) { console.error(e); }
+}
+
+// ── BLOG MODAL ──
+function openBlog(id) {
+  const p = (window._blogPosts || []).find(x => x.id === id);
+  if (!p) return;
+  document.getElementById('modal-tag').textContent = p.tag || '';
+  document.getElementById('modal-title').textContent = p.title;
+  document.getElementById('modal-meta').innerHTML = `<span>🕐 ${p.read_time || '5 min'}</span><span>${new Date(p.created_at).toLocaleDateString('fr-FR')}</span>`;
+  const content = p.content || p.excerpt || 'Contenu bientôt disponible…';
+  document.getElementById('modal-content').innerHTML = typeof marked !== 'undefined' ? marked.parse(content) : content;
+  document.getElementById('blog-modal').classList.add('open');
+}
+function closeBlogModal() { document.getElementById('blog-modal').classList.remove('open'); }
+document.getElementById('blog-modal').addEventListener('click', e => { if (e.target === document.getElementById('blog-modal')) closeBlogModal(); });
+
+// ── ADMIN ──
+function openAdmin() { document.getElementById('admin-panel').classList.add('open'); document.getElementById('admin-login').style.display = 'block'; document.getElementById('admin-dashboard').style.display = 'none'; document.getElementById('admin-pwd').focus(); }
+function closeAdmin() { document.getElementById('admin-panel').classList.remove('open'); }
+function checkLogin() {
+  const pwd = document.getElementById('admin-pwd').value;
+  if (pwd === ADMIN_PASSWORD) {
+    document.getElementById('admin-login').style.display = 'none';
+    document.getElementById('admin-dashboard').style.display = 'block';
+    document.getElementById('admin-pwd').value = '';
+    loadBlog(true);
+  } else {
+    document.getElementById('login-error').style.display = 'block';
+    document.getElementById('admin-pwd').value = '';
+  }
+}
+function adminTab(name) {
+  document.querySelectorAll('.admin-tab').forEach((t, i) => t.classList.toggle('active', ['profile','blog','projects','certifications'][i] === name));
+  document.querySelectorAll('.admin-section').forEach(s => s.classList.remove('active'));
+  document.getElementById(`tab-${name}`).classList.add('active');
+}
+
+// ── SAVE PROFILE ──
+async function saveProfile() {
+  const body = { name: document.getElementById('p-name').value, title: document.getElementById('p-title').value, bio: document.getElementById('p-bio').value, email: document.getElementById('p-email').value, phone: document.getElementById('p-phone').value, location: document.getElementById('p-location').value, linkedin_url: document.getElementById('p-linkedin').value, stat_years: document.getElementById('p-years').value, stat_kwc: document.getElementById('p-kwc').value, stat_sites: document.getElementById('p-sites').value, updated_at: new Date().toISOString() };
+  try {
+    await fetch(`${SB_URL}/rest/v1/profile?id=eq.${window._profileId}`, { method: 'PATCH', headers: { 'apikey': SB_KEY, 'Authorization': `Bearer ${SB_KEY}`, 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+    toast('✓ Profil mis à jour !'); loadProfile();
+  } catch (e) { toast('Erreur : ' + e.message, true); }
+}
+
+// ── BLOG CRUD ──
+function resetBlogForm() { ['b-id','b-title','b-tag','b-slug','b-time','b-excerpt','b-content'].forEach(id => document.getElementById(id).value = ''); document.getElementById('b-published').value = 'false'; document.getElementById('blog-form-title').textContent = '// Nouvel article'; }
+function editBlog(id) {
+  const p = (window._blogPosts || []).find(x => x.id === id);
+  if (!p) return;
+  adminTab('blog');
+  document.getElementById('b-id').value = p.id;
+  document.getElementById('b-title').value = p.title || '';
+  document.getElementById('b-tag').value = p.tag || '';
+  document.getElementById('b-slug').value = p.slug || '';
+  document.getElementById('b-time').value = p.read_time || '';
+  document.getElementById('b-excerpt').value = p.excerpt || '';
+  document.getElementById('b-content').value = p.content || '';
+  document.getElementById('b-published').value = String(p.published);
+  document.getElementById('blog-form-title').textContent = `// Modifier : ${p.title}`;
+  document.getElementById('tab-blog').scrollTop = 0;
+}
+async function saveBlogPost() {
+  const id = document.getElementById('b-id').value;
+  const body = { title: document.getElementById('b-title').value, tag: document.getElementById('b-tag').value, slug: document.getElementById('b-slug').value || document.getElementById('b-title').value.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, ''), read_time: document.getElementById('b-time').value, excerpt: document.getElementById('b-excerpt').value, content: document.getElementById('b-content').value, published: document.getElementById('b-published').value === 'true', updated_at: new Date().toISOString() };
+  try {
+    if (id) { await fetch(`${SB_URL}/rest/v1/blog_posts?id=eq.${id}`, { method: 'PATCH', headers: { 'apikey': SB_KEY, 'Authorization': `Bearer ${SB_KEY}`, 'Content-Type': 'application/json' }, body: JSON.stringify(body) }); }
+    else { await sb('blog_posts', { method: 'POST', body }); }
+    toast('✓ Article enregistré !'); loadBlog(true); resetBlogForm();
+  } catch (e) { toast('Erreur : ' + e.message, true); }
+}
+async function deleteBlog(id) {
+  if (!confirm('Supprimer cet article ?')) return;
+  await fetch(`${SB_URL}/rest/v1/blog_posts?id=eq.${id}`, { method: 'DELETE', headers: { 'apikey': SB_KEY, 'Authorization': `Bearer ${SB_KEY}` } });
+  toast('Article supprimé.'); loadBlog(true);
+}
+
+// ── PROJECT CRUD ──
+function resetProjectForm() { ['proj-id','proj-title','proj-kwc','proj-type','proj-meta','proj-desc','proj-badges'].forEach(id => document.getElementById(id).value = ''); document.getElementById('proj-form-title').textContent = '// Nouveau projet'; }
+function editProject(id) {
+  const p = (window._projects || []).find(x => x.id === id);
+  if (!p) return;
+  adminTab('projects');
+  document.getElementById('proj-id').value = p.id;
+  document.getElementById('proj-title').value = p.title || '';
+  document.getElementById('proj-kwc').value = p.kwc || '';
+  document.getElementById('proj-type').value = p.type_label || '';
+  document.getElementById('proj-meta').value = p.meta || '';
+  document.getElementById('proj-desc').value = p.description || '';
+  document.getElementById('proj-badges').value = (p.badges || []).join(', ');
+  document.getElementById('proj-form-title').textContent = `// Modifier : ${p.title}`;
+}
+async function saveProject() {
+  const id = document.getElementById('proj-id').value;
+  const body = { title: document.getElementById('proj-title').value, kwc: document.getElementById('proj-kwc').value, type_label: document.getElementById('proj-type').value, meta: document.getElementById('proj-meta').value, description: document.getElementById('proj-desc').value, badges: document.getElementById('proj-badges').value.split(',').map(s => s.trim()).filter(Boolean) };
+  try {
+    if (id) { await fetch(`${SB_URL}/rest/v1/projects?id=eq.${id}`, { method: 'PATCH', headers: { 'apikey': SB_KEY, 'Authorization': `Bearer ${SB_KEY}`, 'Content-Type': 'application/json' }, body: JSON.stringify(body) }); }
+    else { await sb('projects', { method: 'POST', body }); }
+    toast('✓ Projet enregistré !'); loadProjects(); resetProjectForm();
+  } catch (e) { toast('Erreur : ' + e.message, true); }
+}
+async function deleteProject(id) {
+  if (!confirm('Supprimer ce projet ?')) return;
+  await fetch(`${SB_URL}/rest/v1/projects?id=eq.${id}`, { method: 'DELETE', headers: { 'apikey': SB_KEY, 'Authorization': `Bearer ${SB_KEY}` } });
+  toast('Projet supprimé.'); loadProjects();
+}
+
+// ── CERT CRUD ──
+function resetCertForm() { ['cert-id','cert-title','cert-date','cert-issuer','cert-icon'].forEach(id => document.getElementById(id).value = ''); document.getElementById('cert-form-title').textContent = '// Nouvelle certification'; }
+function editCert(id) {
+  const c = (window._certs || []).find(x => x.id === id);
+  if (!c) return;
+  adminTab('certifications');
+  document.getElementById('cert-id').value = c.id;
+  document.getElementById('cert-title').value = c.title || '';
+  document.getElementById('cert-date').value = c.date_label || '';
+  document.getElementById('cert-issuer').value = c.issuer || '';
+  document.getElementById('cert-icon').value = c.icon || '';
+  document.getElementById('cert-form-title').textContent = `// Modifier : ${c.title}`;
+}
+async function saveCert() {
+  const id = document.getElementById('cert-id').value;
+  const body = { title: document.getElementById('cert-title').value, date_label: document.getElementById('cert-date').value, issuer: document.getElementById('cert-issuer').value, icon: document.getElementById('cert-icon').value || '🎓' };
+  try {
+    if (id) { await fetch(`${SB_URL}/rest/v1/certifications?id=eq.${id}`, { method: 'PATCH', headers: { 'apikey': SB_KEY, 'Authorization': `Bearer ${SB_KEY}`, 'Content-Type': 'application/json' }, body: JSON.stringify(body) }); }
+    else { await sb('certifications', { method: 'POST', body }); }
+    toast('✓ Certification enregistrée !'); loadCerts(); resetCertForm();
+  } catch (e) { toast('Erreur : ' + e.message, true); }
+}
+async function deleteCert(id) {
+  if (!confirm('Supprimer cette certification ?')) return;
+  await fetch(`${SB_URL}/rest/v1/certifications?id=eq.${id}`, { method: 'DELETE', headers: { 'apikey': SB_KEY, 'Authorization': `Bearer ${SB_KEY}` } });
+  toast('Certification supprimée.'); loadCerts();
+}
+
+// ── INIT ──
+loadProfile();
+loadProjects();
+loadCerts();
+loadBlog();
+</script>
+</body>
+</html>
